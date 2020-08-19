@@ -1,0 +1,50 @@
+## NOT ALL LIBRARIES USED
+
+import keras
+import tensorflow as tf
+from tensorflow.keras import backend as K
+from tensorflow.keras import backend, models, layers, optimizers, regularizers
+from tensorflow.keras.layers import Input, Concatenate, Dense, Dropout, Flatten, Activation
+from tensorflow.keras.layers import LSTM
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.callbacks import EarlyStopping
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing import sequence,text
+from keras.preprocessing.sequence import TimeseriesGenerator
+from keras.utils import to_categorical
+from keras.callbacks import EarlyStopping
+
+import numpy as np
+import pandas as pd
+import pandas_datareader as web
+import statsmodels.api as sm
+from statsmodels.tsa.stattools import adfuller, acf, pacf
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.arima_model import ARIMA
+import seaborn as sns
+import math
+import matplotlib.pyplot as plt
+import nltk
+import time
+import string
+import re
+from sklearn.preprocessing import LabelBinarizer
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+from wordcloud import WordCloud,STOPWORDS
+from nltk.tokenize import word_tokenize,sent_tokenize
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from bs4 import BeautifulSoup
+import re,string,unicodedata
+from sklearn import metrics
+from sklearn.metrics import classification_report,confusion_matrix,accuracy_score, mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.svm import LinearSVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer, TfidfTransformer
+from string import punctuation
+from nltk.corpus import wordnet as wn
+import os
+import sys
