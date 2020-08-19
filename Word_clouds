@@ -1,0 +1,47 @@
+jpmhd = " ".join(str(each) for each in jpmnews.headline.unique())
+wordcloud = WordCloud(
+    max_words=200,
+    colormap='Set3',
+    background_color="black",
+    stopwords = set(nltk.corpus.stopwords.words("english"))).generate(jpmhd)
+plt.figure(figsize=(15,10))
+plt.imshow(wordcloud, interpolation='Bilinear')
+plt.axis("off")
+plt.figure(1,figsize=(12, 12))
+plt.show()
+
+cscohd = " ".join(str(each) for each in csconews.headline.unique())
+wordcloud = WordCloud(
+    max_words=200,
+    colormap='Set3',
+    background_color="black",
+    stopwords = set(nltk.corpus.stopwords.words("english"))).generate(cscohd)
+plt.figure(figsize=(15,10))
+plt.imshow(wordcloud, interpolation='Bilinear')
+plt.axis("off")
+plt.figure(1,figsize=(12, 12))
+plt.show()
+
+dukhd = " ".join(str(each) for each in duknews.headline.unique())
+wordcloud = WordCloud(
+    max_words=200,
+    colormap='Set3',
+    background_color="black",
+    stopwords = set(nltk.corpus.stopwords.words("english"))).generate(dukhd)
+plt.figure(figsize=(15,10))
+plt.imshow(wordcloud, interpolation='Bilinear')
+plt.axis("off")
+plt.figure(1,figsize=(12, 12))
+plt.show()
+
+luvhd = " ".join(str(each) for each in luvnews.headline.unique())
+wordcloud = WordCloud(
+    max_words=200,
+    colormap='Set3',
+    background_color="black",
+    stopwords = set(nltk.corpus.stopwords.words("english"))).generate(luvhd)
+plt.figure(figsize=(15,10))
+plt.imshow(wordcloud, interpolation='Bilinear')
+plt.axis("off")
+plt.figure(1,figsize=(12, 12))
+plt.show()
