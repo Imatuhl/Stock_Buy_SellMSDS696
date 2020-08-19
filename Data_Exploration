@@ -1,0 +1,64 @@
+stkhed = pd.read_csv("/kaggle/input/massive-stock-news-analysis-db-for-nlpbacktests/raw_partner_headlines.csv")
+djianews = pd.read_csv("/kaggle/input/stocknews/Combined_News_DJIA.csv")
+jpm = pd.read_csv("/kaggle/input/jpmstock/JPM.csv")
+csco = pd.read_csv("/kaggle/input/stkdata/CSCO.csv")
+duk = pd.read_csv("/kaggle/input/stkdata/DUK.csv")
+luv = pd.read_csv("/kaggle/input/stkdata/LUV.csv")
+
+stkhed
+
+csco['stock'] = 'csco'
+jpm['stock'] = 'jpm'
+duk['stock'] = 'duk'
+luv['stock'] = 'luv'
+
+csco.head()
+duk.head()
+jpm.head()
+luv.head()
+
+stkhed.loc[stkhed['stock'] == 'JPM']
+jpmnews = stkhed.iloc[917887:920759]
+jpmnews
+
+stkhed.loc[stkhed['stock'] == 'DUK']
+duknews = stkhed.iloc[469701:471971]
+duknews
+
+stkhed.loc[stkhed['stock'] == 'CSCO']
+csconews = stkhed.iloc[365795:366302]
+csconews
+
+stkhed.loc[stkhed['stock'] == 'LUV']
+luvnews = stkhed.iloc[1012931:1014826]
+luvnews
+
+csconews = csconews.reset_index()
+duknews = duknews.reset_index()
+jpmnews = jpmnews.reset_index()
+luvnews = luvnews.reset_index()
+
+csconews = csconews.drop(columns = ['Unnamed: 0','url','index'])
+duknews = duknews.drop(columns = ['Unnamed: 0','url','index'])
+jpmnews = jpmnews.drop(columns = ['Unnamed: 0','url','index'])
+luvnews = luvnews.drop(columns = ['Unnamed: 0','url','index'])
+
+for key, count in jpmnews.publisher.value_counts().iteritems():
+    print(f"{key}:\t{count}")
+    
+print(f"Total Records:\t{jpmnews.shape[0]}")
+
+for key, count in csconews.publisher.value_counts().iteritems():
+    print(f"{key}:\t{count}")
+    
+print(f"Total Records:\t{csconews.shape[0]}")
+
+for key, count in duknews.publisher.value_counts().iteritems():
+    print(f"{key}:\t{count}")
+    
+print(f"Total Records:\t{duknews.shape[0]}")
+
+for key, count in luvnews.publisher.value_counts().iteritems():
+    print(f"{key}:\t{count}")
+    
+print(f"Total Records:\t{luvnews.shape[0]}")
