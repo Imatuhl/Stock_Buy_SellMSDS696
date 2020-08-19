@@ -43,22 +43,18 @@ duknews = duknews.drop(columns = ['Unnamed: 0','url','index'])
 jpmnews = jpmnews.drop(columns = ['Unnamed: 0','url','index'])
 luvnews = luvnews.drop(columns = ['Unnamed: 0','url','index'])
 
-for key, count in jpmnews.publisher.value_counts().iteritems():
-    print(f"{key}:\t{count}")
-    
-print(f"Total Records:\t{jpmnews.shape[0]}")
+plt.figure(figsize=(10,5))
+sns.countplot("publisher", data= csconews)
+plt.show()
 
-for key, count in csconews.publisher.value_counts().iteritems():
-    print(f"{key}:\t{count}")
-    
-print(f"Total Records:\t{csconews.shape[0]}")
+plt.figure(figsize=(10,5))
+sns.countplot("publisher", data= duknews)
+plt.show()
 
-for key, count in duknews.publisher.value_counts().iteritems():
-    print(f"{key}:\t{count}")
-    
-print(f"Total Records:\t{duknews.shape[0]}")
+plt.figure(figsize=(10,5))
+sns.countplot("publisher", data= jpmnews)
+plt.show()
 
-for key, count in luvnews.publisher.value_counts().iteritems():
-    print(f"{key}:\t{count}")
-    
-print(f"Total Records:\t{luvnews.shape[0]}")
+plt.figure(figsize=(10,5))
+sns.countplot("publisher", data= luvnews)
+plt.show()
