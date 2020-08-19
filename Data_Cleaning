@@ -1,0 +1,56 @@
+stop = set(stopwords.words('english'))
+punctuation = list(string.punctuation)
+stop.update(punctuation)
+
+def strip_html(headline):
+    soup = BeautifulSoup(headline, "html.parser")
+    return soup.get_text()
+
+def remove_between_square_brackets(headline):
+    return re.sub('\[[^]]*\]', '', headline)
+
+def remove_between_square_brackets(headline):
+    return re.sub(r'http\S+', ' ',headline)
+
+def remove_stopwords(headline):
+    final_headline = []
+    for i in headline.split():
+        if i.strip().lower() not in stop:
+            final_headline.append(i.strip())
+    return " ".join(final_headline)
+
+def clean_text(headline):
+    headline = strip_html(headline)
+    headline = remove_between_square_brackets(headline)
+    headline = remove_stopwords(headline)
+    return headline
+
+csconews['headline']= csconews['headline'].apply(clean_text)
+duknews['headline']= duknews['headline'].apply(clean_text)
+jpmnews['headline']= jpmnews['headline'].apply(clean_text)
+luvnews['headline']= luvnews['headline'].apply(clean_text)
+
+csco = csco[:-17]
+csco.tail()
+
+duk = duk[:-17]
+duk.tail()
+
+jpm = jpm[:-17]
+jpm.tail()
+
+luv = luv[:-17]
+luv.tail()
+
+csco['Date'] = pd.to_datetime(csco['Date'], infer_datetime_format=True)
+indcsco = csco.set_index(['Date'])
+
+duk['Date'] = pd.to_datetime(duk['Date'], infer_datetime_format=True)
+indduk = duk.set_index(['Date'])
+
+jpm['Date'] = pd.to_datetime(jpm['Date'], infer_datetime_format=True)
+indjpm = jpm.set_index(['Date'])
+
+luv['Date'] = pd.to_datetime(luv['Date'], infer_datetime_format=True)
+indluv = luv.set_index(['Date'])
+indluv.head()
