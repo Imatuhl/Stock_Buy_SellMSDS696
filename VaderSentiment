@@ -1,0 +1,111 @@
+analyzer = SentimentIntensityAnalyzer()
+
+cscoscores = csconews['headline'].apply(analyzer.polarity_scores).tolist()
+
+csco_scores = pd.DataFrame(cscoscores)
+newscsco = csconews.join(csco_scores, rsuffix='_right')
+
+newscsco['date'] = pd.to_datetime(newscsco.date).dt.date
+
+cscostock = newscsco['stock'].unique().tolist()
+csco_dict = {name: newscsco.loc[newscsco['stock'] == name] for name in cscostock}
+
+values = []
+for stock in csco_dict: 
+    dataframe = csco_dict[stock]
+    dataframe = dataframe.set_index('stock')
+    dataframe = dataframe.drop(columns = ['headline'])
+    print ('\n')
+    print (dataframe.head())
+    
+    mean = round(dataframe['compound'].mean(), 2)
+    values.append(mean)
+    
+cscosent = pd.DataFrame(list(zip(stock, values)), columns =['stock', 'mean sentiment']) 
+cscosent = cscosent.set_index('stock')
+cscosent = cscosent.sort_values('mean sentiment', ascending=True)
+print ('\n')
+print (cscosent)
+
+analyzer = SentimentIntensityAnalyzer()
+
+dukscores = duknews['headline'].apply(analyzer.polarity_scores).tolist()
+
+duk_scores = pd.DataFrame(dukscores)
+newsduk = duknews.join(duk_scores, rsuffix='_right')
+
+newsduk['date'] = pd.to_datetime(newsduk.date).dt.date
+
+dukstock = newsduk['stock'].unique().tolist()
+duk_dict = {name: newsduk.loc[newsduk['stock'] == name] for name in dukstock}
+
+values = []
+for stock in duk_dict: 
+    dataframe = duk_dict[stock]
+    dataframe = dataframe.set_index('stock')
+    dataframe = dataframe.drop(columns = ['headline'])
+    print ('\n')
+    print (dataframe.head())
+    
+    mean = round(dataframe['compound'].mean(), 2)
+    values.append(mean)
+    
+duksent = pd.DataFrame(list(zip(stock, values)), columns =['stock', 'mean sentiment']) 
+duksent = duksent.set_index('stock')
+duksent = duksent.sort_values('mean sentiment', ascending=True)
+print ('\n')
+print (duksent)
+
+jpmscores = jpmnews['headline'].apply(analyzer.polarity_scores).tolist()
+
+jpm_scores = pd.DataFrame(jpmscores)
+newsjpm = jpmnews.join(jpm_scores, rsuffix='_right')
+
+newsjpm['date'] = pd.to_datetime(newsjpm.date).dt.date
+
+jpmstock = newsjpm['stock'].unique().tolist()
+jpm_dict = {name: newsjpm.loc[newsjpm['stock'] == name] for name in jpmstock}
+
+values = []
+for stock in jpm_dict: 
+    dataframe = jpm_dict[stock]
+    dataframe = dataframe.set_index('stock')
+    dataframe = dataframe.drop(columns = ['headline'])
+    print ('\n')
+    print (dataframe.head())
+    
+    mean = round(dataframe['compound'].mean(), 2)
+    values.append(mean)
+    
+jpmsent = pd.DataFrame(list(zip(stock, values)), columns =['stock', 'mean sentiment']) 
+jpmsent = jpmsent.set_index('stock')
+jpmsent = jpmsent.sort_values('mean sentiment', ascending=True)
+print ('\n')
+print (jpmsent)
+
+luvscores = luvnews['headline'].apply(analyzer.polarity_scores).tolist()
+
+luv_scores = pd.DataFrame(luvscores)
+newsluv = luvnews.join(luv_scores, rsuffix='_right')
+
+newsluv['date'] = pd.to_datetime(newsluv.date).dt.date
+
+luvstock = newsluv['stock'].unique().tolist()
+luvdict = {name: newsluv.loc[newsluv['stock'] == name] for name in luvstock}
+
+values = []
+for stock in luvdict: 
+    dataframe = luvdict[stock]
+    dataframe = dataframe.set_index('stock')
+    dataframe = dataframe.drop(columns = ['headline'])
+    print ('\n')
+    print (dataframe.head())
+    
+    mean = round(dataframe['compound'].mean(), 2)
+    values.append(mean)
+    
+luvsent = pd.DataFrame(list(zip(stock, values)), columns =['stock', 'mean sentiment']) 
+luvsent = luvsent.set_index('stock')
+luvsent = luvsent.sort_values('mean sentiment', ascending=True)
+print ('\n')
+print (luvsent)
