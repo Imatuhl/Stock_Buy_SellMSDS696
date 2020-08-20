@@ -72,6 +72,18 @@ This did not show any major seasonality so the normal ARIMA model was used inste
 
 The RSS score on all of these models was very low which indicates a good fit to the ARIMA model. Finally, I used the ARIMA model to forecast 60 days into the future with the pricing data. 
 
-![GitHub Logo](/images/cscoarima.png)![GitHub Logo](/images/dukarima.png)![GitHub Logo](/images/jpmarima.png)![GitHub Logo](/images/luvarima.png)
+![GitHub Logo](/images/cscofore.png)![GitHub Logo](/images/dukfore.png)![GitHub Logo](/images/jpmfore.png)![GitHub Logo](/images/luvfore.png)
 
-All of these models show an excellent fit to the data but show a wide variation of price in the 60 day forecast window. Pairing the sentiment analysis with this data and seeing an upward trend we might classify these stocks as a neutral/hold or buy for the purpose of this experiment.
+All of these models show an excellent fit to the data but show a wide variation of price in the 60 day forecast window. Pairing the sentiment analysis with this data and seeing an upward trend we might classify these stocks as a neutral/hold or buy for the purpose of this experiment. 
+
+## LSTM 30-day Forecast
+
+This particular model did not perform well on a 30-day forecast which could be mostely due to tuning of the model. It could not predict with any confidence the next 30 days of trading for each stock.
+
+## Expanding the model
+
+A different lexicon could be chosen to complete the sentiment analysis that may improve the analysis. 
+This model could be expanded by applying the sentiment data generated from the analysis to the pricing data. 
+The model could be adjusted to count the number of positive articles and classify each stock into a positive or negative categories
+The LSTM model for 30-day forecasting needs to be adjusted so that the results are more accurate
+
