@@ -19,12 +19,25 @@ The stock price data needed to be maniuplated to remove disclosure information a
 
 To explore the sentiment data intial graphs were created to see how data was distributed. Next, I created word coulds to see if I could see which words appeared the most. 
 
-![GitHub Logo](/images/CSCONEWSgraph.png)![GitHub Logo](/images/DukNewgraph.png)![GitHub Logo](/images/JpmNewsgraph.png)![GitHub Logo](/images/LuvNewsgraph.png)
+![GitHub Logo](/images/CSCONEWSgraph.png)![GitHub Logo](/images/DukNewGraph.png)![GitHub Logo](/images/JpmNewsGraph.png)![GitHub Logo](/images/LuvNewsGraph.png)
+
+![GitHub Logo](/images/CscoWordCloud.png)![GitHub Logo](/images/DukWordCloud.png)![GitHub Logo](/images/JPMWordCloud.png)![GitHub Logo](/images/LuvWordCloud.png)
 
 Price graphs with added rolling mean and standard deviation were generated to obtain a good idea of the shape and trend of the overall pricing data. 
 
 ![GitHub Logo](/images/cscopricegraph.png)![GitHub Logo](/images/dukpricegraph.png)![GitHub Logo](/images/jpmpricegraph.png)![GitHub Logo](/images/luvpricegraph.png)
 
+Kernal Density Graphs were created to see what the probabily of a stock being a particular price might be and Volume graphs created to see what trading volatility would look like.
 
+![GitHub Logo](/images/cscodensity.png)![GitHub Logo](/images/dukdensity.png)![GitHub Logo](/images/jpmdensity.png)![GitHub Logo](/images/luvdensity.png)
+![GitHub Logo](/images/cscovolume.png)![GitHub Logo](/images/dukvolume.png)![GitHub Logo](/images/jpmvolume.png)![GitHub Logo](/images/luvvolume.png)
+
+## Sentiment Analysis
+
+Sentiment Analysis was done using a VADER Lexicon Approach. This method uses a dictionary method that assigns values to words where the values have been predetermined. Vader uses a sentiment intensity range of -1 to 1 where -1 is highly negative and 1 is very positive. A second analysis was completed using data from FINVIZ to compare results.
+
+Overall the sentiment analysis of the headlines came out to be very slightly positive and very close to neutral. This could be due to the VADER model not understanding the Financial market termanology. Even the second source from FINVIZ yielded similar results. To adjust for this A different lexicon could be used that would better understand the terminology of the Financial system. Another alternative is a source such as stocktwits could be used to analyze sentiment from investors as opposed to analyzing headlines.
+
+![GitHub Logo](/images/cscovader.png)![GitHub Logo](/images/dukvader.png)![GitHub Logo](/images/jpmvader.png)![GitHub Logo](/images/luvvader.png)![GitHub Logo](/images/finviz.png)
 
 
