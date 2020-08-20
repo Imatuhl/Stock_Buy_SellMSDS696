@@ -1,0 +1,303 @@
+cscocl = indcsco.filter(['Close'])
+cscocl.head()
+
+cscoarray = cscocl.values
+
+cscotrainlen = math.ceil(len(cscoarray)* .8)
+cscotrainlen
+
+scaler = MinMaxScaler(feature_range=(0,1))
+cscoscal = scaler.fit_transform(cscoarray)
+cscoscal
+
+cscotrain = cscoscal[0:cscotrainlen , :]
+x_csco = []
+y_csco = []
+
+for i in range(60, len(cscotrain)):
+    x_csco.append(cscotrain[i-60:i, 0])
+    y_csco.append(cscotrain[i, 0])
+    if i <= 61:
+        print(x_csco)
+        print(y_csco)
+        print()
+        
+x_csco, y_csco = np.array(x_csco), np.array(y_csco)
+x_csco.shape
+
+x_csco = np.reshape(x_csco, (x_csco.shape[0], x_csco.shape[1], 1))
+x_csco.shape
+
+#lstm model
+cscomod = Sequential()
+cscomod.add(layers.LSTM(50, return_sequences=True, input_shape=(x_csco.shape[1], 1)))
+cscomod.add(layers.LSTM(50, return_sequences=False))
+cscomod.add(layers.Dense(25))
+cscomod.add(layers.Dense(1))
+
+cscomod.summary()
+
+#Compile
+
+cscomod.compile(optimizer='adam', loss='mean_squared_error')
+cscomod.fit(x_csco,y_csco, batch_size=1, epochs = 1)
+
+#test data
+cscotest = cscoscal[cscotrainlen - 60: , :]
+# x_test y_test
+x_test = []
+y_test = cscoarray[cscotrainlen:, :]
+for i in range(60, len(cscotest)):
+    x_test.append(cscotest[i-60:i, 0])
+
+x_test = np.array(x_test)
+x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
+
+pred = cscomod.predict(x_test)
+pred = scaler.inverse_transform(pred)
+
+#Root Mean squared Error
+rmse = np.sqrt(np.mean(pred - y_test)**2)
+rmse
+
+trainc = indcsco[:cscotrainlen]
+validc =  indcsco[cscotrainlen:]
+validc['Predictions'] = pred
+# Visualization
+plt.figure(figsize=(16,8))
+plt.title('CSCO PRED')
+plt.xlabel('Date', fontsize=18)
+plt.ylabel('Close price usd', fontsize=18)
+plt.plot(trainc['Close'])
+plt.plot(validc[['Close', 'Predictions']])
+plt.legend(['Train','Val','Predictions'], loc='lower right')
+plt.show()
+
+jpmcl = indjpm.filter(['Close'])
+jpmarray = jpmcl.values
+jpmtrainlen = math.ceil(len(jpmarray)* .8)
+
+jpmscal = scaler.fit_transform(jpmarray)
+
+jpmtrain = jpmscal[0:jpmtrainlen , :]
+x_jpm = []
+y_jpm = []
+
+for i in range(60, len(jpmtrain)):
+    x_jpm.append(jpmtrain[i-60:i, 0])
+    y_jpm.append(jpmtrain[i, 0])
+    if i <= 61:
+        print(x_jpm)
+        print(y_jpm)
+        print()
+
+x_jpm, y_jpm = np.array(x_jpm), np.array(y_jpm)
+x_jpm = np.reshape(x_jpm, (x_jpm.shape[0], x_jpm.shape[1], 1))
+
+jpmmod = Sequential()
+jpmmod.add(layers.LSTM(50, return_sequences=True, input_shape=(x_jpm.shape[1], 1)))
+jpmmod.add(layers.LSTM(50, return_sequences=False))
+jpmmod.add(layers.Dense(25))
+jpmmod.add(layers.Dense(1))
+
+jpmmod.summary()
+
+jpmmod.compile(optimizer='adam', loss='mean_squared_error')
+jpmmod.fit(x_jpm,y_jpm, batch_size=1, epochs = 1)
+
+#test data
+jpmtest = jpmscal[jpmtrainlen - 60: , :]
+# x_test y_test
+x_testjpm = []
+y_testjpm = jpmarray[jpmtrainlen:, :]
+for i in range(60, len(jpmtest)):
+    x_testjpm.append(jpmtest[i-60:i, 0])
+    
+    x_testjpm = np.array(x_testjpm)
+x_testjpm = np.reshape(x_testjpm, (x_testjpm.shape[0], x_testjpm.shape[1], 1))
+
+predjpm = jpmmod.predict(x_testjpm)
+predjpm = scaler.inverse_transform(predjpm)
+
+jpmrmse = np.sqrt(np.mean(predjpm - y_testjpm)**2)
+jpmrmse
+
+trainj = indjpm[:jpmtrainlen]
+validj =  indjpm[jpmtrainlen:]
+validj['Predictions'] = predjpm
+# Visualization
+plt.figure(figsize=(16,8))
+plt.title('JPM PRED')
+plt.xlabel('Date', fontsize=18)
+plt.ylabel('Close price usd', fontsize=18)
+plt.plot(trainj['Close'])
+plt.plot(validj[['Close', 'Predictions']])
+plt.legend(['Train','Val','Predictions'], loc='lower right')
+plt.show()
+
+dukcl = indduk.filter(['Close'])
+dukarray = dukcl.values
+duktrainlen = math.ceil(len(dukarray)* .8)
+
+dukscal = scaler.fit_transform(dukarray)
+
+duktrain = dukscal[0:duktrainlen , :]
+x_duk = []
+y_duk = []
+
+for i in range(60, len(duktrain)):
+    x_duk.append(duktrain[i-60:i, 0])
+    y_duk.append(duktrain[i, 0])
+    if i <= 60:
+        print(x_duk)
+        print(y_duk)
+        print()
+
+x_duk, y_duk = np.array(x_duk), np.array(y_duk)
+x_duk = np.reshape(x_duk, (x_duk.shape[0], x_duk.shape[1], 1))
+
+dukmod = Sequential()
+dukmod.add(layers.LSTM(50, return_sequences=True, input_shape=(x_duk.shape[1], 1)))
+dukmod.add(layers.LSTM(50, return_sequences=False))
+dukmod.add(layers.Dense(25))
+dukmod.add(layers.Dense(1))
+
+dukmod.summary()
+
+dukmod.compile(optimizer='adam', loss='mean_squared_error')
+dukmod.fit(x_duk,y_duk, batch_size=1, epochs = 1)
+
+#test data
+duktest = dukscal[duktrainlen - 60: , :]
+# x_test y_test
+x_testduk = []
+y_testduk = dukarray[duktrainlen:, :]
+for i in range(60, len(duktest)):
+    x_testduk.append(duktest[i-60:i, 0])
+
+x_testduk = np.array(x_testduk)
+x_testduk = np.reshape(x_testduk, (x_testduk.shape[0], x_testduk.shape[1], 1))
+
+predduk = dukmod.predict(x_testduk)
+predduk = scaler.inverse_transform(predduk)
+
+dukrmse = np.sqrt(np.mean(predduk - y_testduk)**2)
+dukrmse
+
+traind = indduk[:duktrainlen]
+validd =  indduk[duktrainlen:]
+validd['Predictions'] = predduk
+# Visualization
+plt.figure(figsize=(16,8))
+plt.title('DUK PRED')
+plt.xlabel('Date', fontsize=18)
+plt.ylabel('Close price usd', fontsize=18)
+plt.plot(traind['Close'])
+plt.plot(validd[['Close', 'Predictions']])
+plt.legend(['Train','Val','Predictions'], loc='lower right')
+plt.show()
+
+luvcl = indluv.filter(['Close'])
+luvarray = luvcl.values
+luvtrainlen = math.ceil(len(luvarray)* .8)
+
+luvscal = scaler.fit_transform(luvarray)
+
+luvtrain = luvscal[0:luvtrainlen , :]
+x_luv = []
+y_luv = []
+
+for i in range(60, len(luvtrain)):
+    x_luv.append(luvtrain[i-60:i, 0])
+    y_luv.append(luvtrain[i, 0])
+    if i <= 60:
+        print(x_luv)
+        print(y_luv)
+        print()
+
+x_luv, y_luv = np.array(x_luv), np.array(y_luv)
+x_luv = np.reshape(x_luv, (x_luv.shape[0], x_luv.shape[1], 1))
+
+luvmod = Sequential()
+luvmod.add(layers.LSTM(50, return_sequences=True, input_shape=(x_luv.shape[1], 1)))
+luvmod.add(layers.LSTM(50, return_sequences=False))
+luvmod.add(layers.Dense(25))
+luvmod.add(layers.Dense(1))
+
+luvmod.summary()
+
+luvmod.compile(optimizer='adam', loss='mean_squared_error')
+luvmod.fit(x_luv,y_luv, batch_size=1, epochs = 1)
+
+#test data
+luvtest = luvscal[luvtrainlen - 60: , :]
+# x_test y_test
+x_testluv = []
+y_testluv = luvarray[luvtrainlen:, :]
+for i in range(60, len(luvtest)):
+    x_testluv.append(luvtest[i-60:i, 0])
+
+x_testluv = np.array(x_testluv)
+x_testluv = np.reshape(x_testluv, (x_testluv.shape[0], x_testluv.shape[1], 1))
+
+predluv = luvmod.predict(x_testluv)
+predluv = scaler.inverse_transform(predluv)
+
+luvrmse = np.sqrt(np.mean(predluv - y_testluv)**2)
+luvrmse
+
+trainl = luv[:luvtrainlen]
+validl =  luv[luvtrainlen:]
+validl['Predictions'] = predluv
+# Visualization
+plt.figure(figsize=(16,8))
+plt.title('LUV PRED')
+plt.xlabel('Date', fontsize=18)
+plt.ylabel('Close price usd', fontsize=18)
+plt.plot(trainl['Close'])
+plt.plot(validl[['Close', 'Predictions']])
+plt.legend(['Train','Val','Predictions'], loc='lower right')
+plt.show()
+
+trainl = luv[:luvtrainlen]
+validl =  luv[luvtrainlen:]
+validl['Predictions'] = predluv
+# Visualization
+plt.figure(figsize=(16,8))
+plt.title('LUV PRED')
+plt.xlabel('Date', fontsize=18)
+plt.ylabel('Close price usd', fontsize=18)
+plt.plot(trainl['Close'])
+plt.plot(validl[['Close', 'Predictions']])
+plt.legend(['Train','Val','Predictions'], loc='lower right')
+plt.show()
+
+forduk = dukcl[-100:].values
+fordukscal = scaler.transform(forduk)
+xtestd = []
+xtestd.append(fordukscal)
+xtestd =np.array(xtestd)
+xtestd = np.reshape(xtestd,(xtestd.shape[0],xtestd.shape[1],1))
+pred_priced = dukmod.predict(xtestd)
+pred_priced = scaler.inverse_transform(pred_priced)
+print(pred_priced)
+
+forjpm = jpmcl[-100:].values
+forjpmscal = scaler.transform(forjpm)
+xtestj = []
+xtestj.append(forjpmscal)
+xtestj =np.array(xtestj)
+xtestj = np.reshape(xtestj,(xtestj.shape[0],xtestj.shape[1],1))
+pred_pricej = jpmmod.predict(xtestj)
+pred_pricej = scaler.inverse_transform(pred_pricej)
+print(pred_pricej)
+
+forluv = luvcl[-100:].values
+forluvscal = scaler.transform(forluv)
+xtestl = []
+xtestl.append(forluvscal)
+xtestl =np.array(xtestl)
+xtestl = np.reshape(xtestl,(xtestl.shape[0],xtestl.shape[1],xtestl.shape[2]))
+pred_pricel = luvmod.predict(xtestl)
+pred_pricel = scaler.inverse_transform(pred_pricel)
+print(pred_pricel)
