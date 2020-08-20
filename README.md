@@ -1,6 +1,8 @@
 # Stock_Buy_Sell
 forecasting stock price with sentiment analysis, LSTM and ARIMA
 
+Disclaimer: THIS IS NOT STOCK ADVICE DO NOT USE THIS FOR PERSONAL USE.
+
 ## Introduction
 
 The purpose of this experiment is to use sentiment analysis paired with forecasting machiine learning methods to determine future trends for stock prices.
@@ -40,4 +42,36 @@ Overall the sentiment analysis of the headlines came out to be very slightly pos
 
 ![GitHub Logo](/images/cscovader.png)![GitHub Logo](/images/dukvader.png)![GitHub Logo](/images/jpmvader.png)![GitHub Logo](/images/luvvader.png)![GitHub Logo](/images/finviz.png)
 
+The Sentiment Analysis was still positive so we will consider that in the final decision after the forecasting analysis.
 
+## LSTM model
+
+A Long Short Term Memory recurrent neural network (LSTM) was chosen to complete the first analysis of the closing price data for this project. It was chosen because of its simplicity, ease of use, minimal preprocessing, and powerful ability to predict time series data. To normalize the data we needed to scale it and turn it into a numpy array. Then the LSTM model was created keras. 
+
+![GitHub Logo](/images/LSTMSingle.png)
+
+The same model architecture was used for all of the stock pricing data. The model was fitted then predicted the data.
+
+![GitHub Logo](/images/LSTMpredictions.png)
+
+This first model performed very well with root mean squared error all being very low and even making a single step forecast resulted in predictions that were only a few dollars off of the actual closing price.
+
+## Arima Model
+
+The ARIMA model was more time consuming. This model I needed to check to see if the data was stationary and if not manipulate it to make it stationary. I also needed to check for other factors like seasonality by decomposing the data.
+
+A Dickey-Fuller test was done on each stock price data and it was determined that the data was not stationary. I manipulated the data using a log function and completed another Dickey-Fuller test. This made the data stationary. I also completed a weighted average manipulation but this resulted in less stationary data.
+
+Next, I decomposed the data using a decompose function.
+
+![GitHub Logo](/images/cscodecomp.png)![GitHub Logo](/images/dukdecomp.png)![GitHub Logo](/images/jpmdecomp.png)![GitHub Logo](/images/luvdecomp.png)
+
+This did not show any major seasonality so the normal ARIMA model was used instead of the SARIMA model. The ARIMA models were then fit to the pricing data.
+
+![GitHub Logo](/images/cscoarima.png)![GitHub Logo](/images/dukarima.png)![GitHub Logo](/images/jpmarima.png)![GitHub Logo](/images/luvarima.png)
+
+The RSS score on all of these models was very low which indicates a good fit to the ARIMA model. Finally, I used the ARIMA model to forecast 60 days into the future with the pricing data. 
+
+![GitHub Logo](/images/cscoarima.png)![GitHub Logo](/images/dukarima.png)![GitHub Logo](/images/jpmarima.png)![GitHub Logo](/images/luvarima.png)
+
+All of these models show an excellent fit to the data but show a wide variation of price in the 60 day forecast window. Pairing the sentiment analysis with this data and seeing an upward trend we might classify these stocks as a neutral/hold or buy for the purpose of this experiment.
