@@ -1,0 +1,271 @@
+sftcsco = lgcsco - lgcsco.shift()
+sftcsco.dropna(inplace=True)
+test_stationaryc(sftcsco)
+
+sftduk = lgduk - lgduk.shift()
+sftduk.dropna(inplace=True)
+test_stationaryd(sftduk)
+
+sftjpm = lgjpm - lgjpm.shift()
+sftjpm.dropna(inplace=True)
+test_stationaryj(sftjpm)
+
+sftluv = lgluv - lgluv.shift()
+sftluv.dropna(inplace=True)
+test_stationaryl(sftluv)
+
+decompcsco = seasonal_decompose(lgcsco, freq=365)
+
+trendc = decompcsco.trend
+seasonalc = decompcsco.seasonal
+residualc = decompcsco.resid
+
+plt.subplot(411)
+plt.plot(lgcsco, label='Original')
+plt.legend(loc='best')
+plt.subplot(412)
+plt.plot(trendc, label='Trend')
+plt.legend(loc='best')
+plt.subplot(413)
+plt.plot(seasonalc, label= 'Seasonal')
+plt.legend(loc='best')
+plt.subplot(414)
+plt.plot(residualc, label='Residual')
+plt.legend(loc='best')
+plt.tight_layout()
+
+decompduk = seasonal_decompose(lgduk, freq=365)
+
+trendd = decompduk.trend
+seasonald = decompduk.seasonal
+residuald = decompduk.resid
+
+plt.subplot(411)
+plt.plot(lgduk, label='Original')
+plt.legend(loc='best')
+plt.subplot(412)
+plt.plot(trendd, label='Trend')
+plt.legend(loc='best')
+plt.subplot(413)
+plt.plot(seasonald, label= 'Seasonal')
+plt.legend(loc='best')
+plt.subplot(414)
+plt.plot(residuald, label='Residual')
+plt.legend(loc='best')
+plt.tight_layout()
+
+decompjpm = seasonal_decompose(lgjpm, freq=365)
+
+trendj = decompjpm.trend
+seasonalj = decompjpm.seasonal
+residualj = decompjpm.resid
+
+plt.subplot(411)
+plt.plot(lgjpm, label= 'Original')
+plt.legend(loc='best')
+plt.subplot(412)
+plt.plot(trendj, label='Trend')
+plt.legend(loc='best')
+plt.subplot(413)
+plt.plot(seasonalj, label= 'Seasonal')
+plt.legend(loc='best')
+plt.subplot(414)
+plt.plot(residualj, label='Residual')
+plt.legend(loc='best')
+plt.tight_layout()
+
+decompluv = seasonal_decompose(lgluv, freq=365)
+
+trendl = decompluv.trend
+seasonall = decompluv.seasonal
+residuall = decompluv.resid
+
+plt.subplot(411)
+plt.plot(lgluv, label= 'Original')
+plt.legend(loc='best')
+plt.subplot(412)
+plt.plot(trendl, label='Trend')
+plt.legend(loc='best')
+plt.subplot(413)
+plt.plot(seasonall, label= 'Seasonal')
+plt.legend(loc='best')
+plt.subplot(414)
+plt.plot(residuall, label='Residual')
+plt.legend(loc='best')
+plt.tight_layout()
+
+lagcsco = acf(sftcsco, nlags=20)
+plagcsco = pacf(sftcsco, nlags=20, method='ols')
+
+plt.subplot(121)
+plt.plot(lagcsco)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('auto correlation function')
+plt.tight_layout()
+
+plt.subplot(122)
+plt.plot(plagcsco)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('Partial auto correlation function')
+plt.tight_layout()
+
+lagduk = acf(sftduk, nlags=20)
+plagduk = pacf(sftduk, nlags=20, method='ols')
+
+plt.subplot(121)
+plt.plot(lagduk)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('auto correlation function')
+plt.tight_layout()
+
+plt.subplot(122)
+plt.plot(plagduk)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('Partial auto correlation function')
+plt.tight_layout()
+
+lagjpm = acf(sftjpm, nlags=20)
+plagjpm = pacf(sftjpm, nlags=20, method='ols')
+
+plt.subplot(121)
+plt.plot(lagjpm)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('auto correlation function')
+plt.tight_layout()
+
+plt.subplot(122)
+plt.plot(plagjpm)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('Partial auto correlation function')
+plt.tight_layout()
+
+lagduk = acf(sftduk, nlags=20)
+plagduk = pacf(sftduk, nlags=20, method='ols')
+
+plt.subplot(121)
+plt.plot(lagduk)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('auto correlation function')
+plt.tight_layout()
+
+plt.subplot(122)
+plt.plot(plagduk)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('Partial auto correlation function')
+plt.tight_layout()
+
+lagluv = acf(sftluv, nlags=20)
+plagluv = pacf(sftluv, nlags=20, method='ols')
+
+plt.subplot(121)
+plt.plot(lagluv)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('auto correlation function')
+plt.tight_layout()
+
+plt.subplot(122)
+plt.plot(plagluv)
+plt.axhline(y=0, linestyle='--', color='gray')
+plt.axhline(y=-1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.axhline(y=1.96/np.sqrt(len(sftcsco)), linestyle='--', color='gray')
+plt.title('Partial auto correlation function')
+plt.tight_layout()
+
+armcsco = ARIMA(lgcsco, order=(1,1,1))
+results_csco = armcsco.fit(disp=-1)
+plt.plot(sftcsco)
+plt.plot(results_csco.fittedvalues, color='red')
+plt.title('RSS: %.4f'% sum((results_csco.fittedvalues-sftcsco['Close'])**2))
+print('plotted csco arima')
+
+armduk = ARIMA(lgduk, order=(1,1,0))
+results_duk = armduk.fit(disp=-1)
+plt.plot(sftduk)
+plt.plot(results_duk.fittedvalues, color='red')
+plt.title('RSS: %.4f'% sum((results_duk.fittedvalues-sftduk['Close'])**2))
+print('plotted DUK arima')
+
+armjpm = ARIMA(lgjpm, order=(1,1,0))
+results_jpm = armjpm.fit(disp=-1)
+plt.plot(sftjpm)
+plt.plot(results_jpm.fittedvalues, color='red')
+plt.title('RSS: %.4f'% sum((results_jpm.fittedvalues-sftjpm['Close'])**2))
+print('plotted JPM arima')
+
+armluv = ARIMA(lgluv, order=(1,1,0))
+results_luv = armluv.fit(disp=-1)
+plt.plot(sftluv)
+plt.plot(results_luv.fittedvalues, color='red')
+plt.title('RSS: %.4f'% sum((results_luv.fittedvalues-sftluv['Close'])**2))
+print('plotted LUV arima')
+
+predarmcsco = pd.Series(results_csco.fittedvalues, copy=True)
+print(predarmcsco)
+
+predarmcscosum = predarmcsco.cumsum()
+print(predarmcscosum)
+
+predarmcscolog = pd.Series(lgcsco['Close'].iloc[0],index=lgcsco.index)
+predarmcscolog = predarmcscolog.add(predarmcscosum, fill_value=0)
+predarmcscolog.head()
+
+cscopredarm = np.exp(predarmcscolog)
+plt.plot(indcsco['Close'])
+plt.plot(cscopredarm, color='red')
+
+results_csco.plot_predict(1,2829)
+cscox=results_csco.forecast(steps=60)
+
+predarmduk = pd.Series(results_duk.fittedvalues, copy=True)
+predarmduksum = predarmduk.cumsum()
+predarmduklog = pd.Series(lgduk['Close'].iloc[0],index=lgduk.index)
+predarmduklog = predarmduklog.add(predarmduksum, fill_value=0)
+predarmduklog.head()
+dukpredarm = np.exp(predarmduklog)
+plt.plot(indduk['Close'])
+plt.plot(dukpredarm, color='red')
+
+results_duk.plot_predict(1,2829)
+dukx=results_duk.forecast(steps=60)
+
+predarmjpm = pd.Series(results_jpm.fittedvalues, copy=True)
+predarmjpmsum = predarmjpm.cumsum()
+predarmjpmlog = pd.Series(lgjpm['Close'].iloc[0],index=lgjpm.index)
+predarmjpmlog = predarmjpmlog.add(predarmjpmsum, fill_value=0)
+predarmjpmlog.head()
+jpmpredarm = np.exp(predarmjpmlog)
+plt.plot(indjpm['Close'])
+plt.plot(jpmpredarm, color='red')
+
+results_jpm.plot_predict(1,2829)
+jpmx=results_jpm.forecast(steps=60)
+
+predarmluv = pd.Series(results_luv.fittedvalues, copy=True)
+predarmluvsum = predarmluv.cumsum()
+predarmluvlog = pd.Series(lgluv['Close'].iloc[0],index=lgluv.index)
+predarmluvlog = predarmluvlog.add(predarmluvsum, fill_value=0)
+predarmluvlog.head()
+luvpredarm = np.exp(predarmluvlog)
+plt.plot(indluv['Close'])
+plt.plot(luvpredarm, color='red')
+
+results_luv.plot_predict(1,2829)
+luvx=results_luv.forecast(steps=60)
